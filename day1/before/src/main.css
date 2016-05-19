@@ -7,14 +7,9 @@ body {
 }
 
 .container {
-    maring: 10px 10px;
+    margin: 10px 10px;
 }
 
 .container-color {
     background-color: #f8f8f8;
-}
-
-.invalid-input {
-    border-color: red !important;
-    border-width: 1px;
 }
