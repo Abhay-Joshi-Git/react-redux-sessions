@@ -40,13 +40,13 @@ const classes = [
         teacher : 'PQR'
     }
 ];
-//
-// ReactDom.render(
-//     <App students={students} classes={classes}/>,
-//     document.getElementById('app')
-// );
 
 ReactDom.render(
-    <Person />,
+    <App students={students} classes={classes}/>,
     document.getElementById('app')
 );
+
+// ReactDom.render(
+//     <Person />,
+//     document.getElementById('app')
+// );
