@@ -1,6 +1,7 @@
 import React from "react";
 import ReactDom from "react-dom";
 import App from "./components/app.js";
+import Person from "./components/person.js";
 
 const students = [
     {
@@ -39,7 +40,13 @@ const classes = [
         teacher : 'PQR'
     }
 ];
+//
+// ReactDom.render(
+//     <App students={students} classes={classes}/>,
+//     document.getElementById('app')
+// );
 
-ReactDom.render(<App students={students} classes={classes}/>,
+ReactDom.render(
+    <Person />,
     document.getElementById('app')
 );
