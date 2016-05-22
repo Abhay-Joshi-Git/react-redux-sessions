@@ -4,16 +4,23 @@ import EmployeeForm from './employeeForm.js';
 
 export default class App extends React.Component {
 
-    constructor () {
+    constructor (props) {
         super();
         this.state = {
             selectedDeparmentId: null,
-            selectedEmployeeId: null
+            selectedEmployeeId: null,
+            employees: props.employees
         }
     }
 
-    addEmployee () {
-
+    onAddEmployeeClick () {
+        this.setState({
+            employee: {
+                id: this.state.employees.length + 1,
+                name: '',
+                department: ''
+            }
+        })
     }
 
     render () {
@@ -24,12 +31,12 @@ export default class App extends React.Component {
                         { this.getDepartmentList(this.props.departments) }
                     </div>
                     <div className='col-md-4'>
-                        { this.getEmployeeList(this.props.employees, this.props.departments) }
+                        { this.getEmployeeList(this.state.employees, this.props.departments) }
 
                         <div className='pull-right'>
                             <button
                                 className='btn btn-primary'
-                                onClick={() => this.addEmployee()}
+                                onClick={() => this.onAddEmployeeClick()}
                             >
                                 <i className='glyphicon glyphicon-plus-sign'></i>
                             </button>
@@ -38,12 +45,39 @@ export default class App extends React.Component {
 
                     </div>
 
-                    <br />
-
+                    <div className='col-md-4'>
+                        { this.state.employee ?
+                            <EmployeeForm
+                                employee={this.state.employee}
+                                departments={this.props.departments}
+                                onEmployeeFormChage={this.onEmployeeChange.bind(this)}                                
+                            /> : null }
+                    </div>
 
                 </div>
             </div>
         );
+    }
+
+    onEmployeeChange (employee) {
+        var { name, id, department  } = employee;
+        console.log(employee, name, id, department);
+        var deptId = this.getDepartmentId(this.props.departments, department)
+
+        var data = this.state.employees.filter(val => val.id !== id);
+        data = [
+            ...data,
+            {
+                name: name,
+                id: id,
+                departmentId: deptId
+            }
+        ];
+        data = _.sortBy(data, 'id');
+        console.log(data);
+        this.setState({
+            employees: data
+        })
     }
 
     onDepartmentClick (id) {
@@ -104,7 +138,7 @@ export default class App extends React.Component {
                         <div
                             className='well well-sm'
                             key={item.id}
-                            onClick={() => this.onEmplClick(item.id)}
+                            onClick={() => this.onEmplClick(item)}
                             style={this.getEmplStyle(item)}
                         >
                             id: {item.id}
@@ -119,9 +153,16 @@ export default class App extends React.Component {
         )
     }
 
-    onEmplClick (id) {
+    onEmplClick (item) {
+        console.log(item)
+        var {name, id} = item;
         this.setState({
-            selectedEmployeeId: id
+            selectedEmployeeId: item.id,
+            employee: {
+                name: name,
+                id: id,
+                department: this.getDepartmentName(this.props.departments, item.departmentId)
+            }
         })
     }
 
@@ -134,5 +175,10 @@ export default class App extends React.Component {
     getDepartmentName (departments, id) {
         var department = _.find(departments, {id: id});
         return department ? department.name : ''
+    }
+
+    getDepartmentId (departments, name) {
+        var department = _.find(departments, {name: name});
+        return department ? department.id : null
     }
 }

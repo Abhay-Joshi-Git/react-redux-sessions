@@ -18,3 +18,7 @@ body {
 .selDept {
     background-color: red !important;
 }
+
+.form-control {
+    display: inline-block;
+}
