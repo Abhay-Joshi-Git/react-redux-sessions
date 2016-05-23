@@ -24,6 +24,7 @@ export default class App extends React.Component {
     }
 
     render () {
+        console.log(this.state.employees.length);
         return (
             <div>
                 <div className='row'>
@@ -46,11 +47,14 @@ export default class App extends React.Component {
                     </div>
 
                     <div className='col-md-4'>
-                        { this.state.employee ?
+                        { (this.state.employee &&
+                            this.getFilteredEmployeeList(this.state.employees,
+                                this.state.selectedDeparmentId).length) ?
                             <EmployeeForm
                                 employee={this.state.employee}
                                 departments={this.props.departments}
-                                onEmployeeFormChage={this.onEmployeeChange.bind(this)}                                
+                                onEmployeeFormChage={this.onEmployeeChange.bind(this)}
+                                key = {this.state.employee.id}
                             /> : null }
                     </div>
 
@@ -61,7 +65,6 @@ export default class App extends React.Component {
 
     onEmployeeChange (employee) {
         var { name, id, department  } = employee;
-        console.log(employee, name, id, department);
         var deptId = this.getDepartmentId(this.props.departments, department)
 
         var data = this.state.employees.filter(val => val.id !== id);
@@ -74,7 +77,6 @@ export default class App extends React.Component {
             }
         ];
         data = _.sortBy(data, 'id');
-        console.log(data);
         this.setState({
             employees: data
         })
@@ -83,7 +85,8 @@ export default class App extends React.Component {
     onDepartmentClick (id) {
         this.setState({
             selectedDeparmentId: id,
-            selectedEmployeeId: null
+            selectedEmployeeId: null,
+            employee: null
         })
     }
 
@@ -124,16 +127,19 @@ export default class App extends React.Component {
         )
     }
 
+    getFilteredEmployeeList (employees, selectedDepartmentId) {
+        return employees.filter(item => {
+            var selDep = selectedDepartmentId;
+            return selDep ? selDep === item.departmentId : true
+        })
+    }
+
     getEmployeeList (employees, departments) {
         return (
             <div className='employees-container'>
                 <h2>Employees</h2>
                 {
-                    employees
-                    .filter(item => {
-                        var selDep = this.state.selectedDeparmentId;
-                        return selDep ? selDep === item.departmentId : true
-                    })
+                    this.getFilteredEmployeeList(employees, this.state.selectedDeparmentId)
                     .map(item => (
                         <div
                             className='well well-sm'
@@ -154,7 +160,6 @@ export default class App extends React.Component {
     }
 
     onEmplClick (item) {
-        console.log(item)
         var {name, id} = item;
         this.setState({
             selectedEmployeeId: item.id,
@@ -168,7 +173,7 @@ export default class App extends React.Component {
 
     getEmplStyle (employee) {
         return {
-            backgroundColor: (this.state.selectedEmployeeId === employee.id) ? 'lime' : ''
+            backgroundColor: (this.state.selectedEmployeeId === employee.id) ? 'red' : ''
         }
     }
 

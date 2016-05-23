@@ -4,10 +4,22 @@ export default class EmployeeForm extends React.Component {
 
     constructor (props) {
         super();
-        console.log(props);
+        console.log('constructor ',  props.employee);
         this.state = {
             employee: {...props.employee}
         }
+    }
+
+    setEmployeeAsState (props) {
+        console.log('setting employee in state', {...props.employee}, this.state);
+        this.setState = {
+            employee: {...props.employee}
+        }
+    }
+
+    componentWillReceiveProps (nextProps) {
+        //console.log('next props ',  nextProps.employee);
+        this.setEmployeeAsState(nextProps)
     }
 
     onSubmit (e) {
@@ -16,7 +28,10 @@ export default class EmployeeForm extends React.Component {
         this.props.onEmployeeFormChage({...this.state.employee});
     }
 
+
+
     onDeptChange (e) {
+        console.log('dept change');
         this.setState({
             employee: {
                 ...this.state.employee,
@@ -26,6 +41,7 @@ export default class EmployeeForm extends React.Component {
     }
 
     render () {
+        console.log('render', this.state);
         return (
             <div>
                 <h4>Employee Details</h4>
@@ -61,7 +77,7 @@ export default class EmployeeForm extends React.Component {
                         </select>
                     </div>
                     <div>
-                        <input type='submit' className='glyphicon glyphicon-ok-sign'/>
+                        <input type='submit' className='btn btn-primary' value='save'/>
                     </div>
                 </form>
 
@@ -71,6 +87,8 @@ export default class EmployeeForm extends React.Component {
 
     onNameChange (event) {
         //console.log(event.target.value);
+        console.log('name change');
+
         this.setState({
             employee: {
                 ...this.state.employee,
