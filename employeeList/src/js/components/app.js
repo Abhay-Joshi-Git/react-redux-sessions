@@ -24,7 +24,6 @@ export default class App extends React.Component {
     }
 
     render () {
-        console.log(this.state.employees.length);
         return (
             <div>
                 <div className='row'>
@@ -54,7 +53,6 @@ export default class App extends React.Component {
                                 employee={this.state.employee}
                                 departments={this.props.departments}
                                 onEmployeeFormChage={this.onEmployeeChange.bind(this)}
-                                key = {this.state.employee.id}
                             /> : null }
                     </div>
 
