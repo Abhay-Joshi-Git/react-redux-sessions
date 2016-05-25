@@ -6,7 +6,7 @@ import Employees from './components/employees.js';
 import Home from './components/home.js';
 import Login from './components/login.js';
 
-var isLoggedIn = false;
+var isLoggedIn = true;
 
 var authenticate = (nextState, replace) => {
     if (!isLoggedIn) {
@@ -21,7 +21,7 @@ var onLeaveHandler = (nextLocation, reaplce) => {
 }
 
 export default (props) => (
-    <Router history={hashHistory} >
+    <Router history={browserHistory} >
         <Route path='/' component={ App } >
             <Route path='home' component={Home} />
             <Route path='about' component={ About } />
@@ -29,6 +29,10 @@ export default (props) => (
                 component={Employees}
                 employees={props.employees}
                 onEnter={authenticate}
+            />
+        <Route path='/employee/:id'
+                component={Employees}
+                employees={props.employees}
             />
             <Route path='login'
                 component={Login}
