@@ -7,12 +7,13 @@ class App extends React.Component {
         return (
             <div>
                 <div className='container'>
-                    <Link to='/' activeStyle={{color:'red'}}>Home</Link>
-                    <IndexLink to='/' activeStyle={{color:'red'}}>Home</IndexLink>
+                    <Link to='/home' activeStyle={{color:'red'}}>Home</Link>
                     { '   '}
                     <Link to='/about' >About</Link>
                     { '   '}
                     <Link to='/employees' >Employees</Link>
+                    { '   '}
+                    <Link to='/login'>Login</Link>                
                 </div>
                 {this.props.children}
             </div>
