@@ -1,5 +1,5 @@
 import React from 'react';
-import { Router, Route, IndexRoute, browserHistory } from 'react-router';
+import { Router, Route, IndexRoute, browserHistory, hashHistory } from 'react-router';
 import App from './components/app.js';
 import About from './components/about.js';
 import Employees from './components/employees.js';
@@ -16,8 +16,12 @@ var authenticate = (nextState, replace) => {
     }
 }
 
+var onLeaveHandler = (nextLocation, reaplce) => {
+    console.log('are you sure?', nextLocation);
+}
+
 export default (props) => (
-    <Router history={browserHistory} >
+    <Router history={hashHistory} >
         <Route path='/' component={ App } >
             <Route path='home' component={Home} />
             <Route path='about' component={ About } />
@@ -26,7 +30,10 @@ export default (props) => (
                 employees={props.employees}
                 onEnter={authenticate}
             />
-            <Route path='login' component={Login} />
+            <Route path='login'
+                component={Login}
+                onLeave={onLeaveHandler}
+            />
         </Route>
     </Router>
 )
