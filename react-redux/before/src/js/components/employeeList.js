@@ -1,28 +1,13 @@
 import React from 'react';
-import store from '../store.js';
+import { connect } from 'react-redux';
 
-export default class App extends React.Component {
-    constructor() {
-        super();
-        this.state = {
-            employees: []
-        }
-    }
-
-    componentDidMount() {
-        store.subscribe(() => {
-            this.setState({
-                employees: [...store.getState()]
-            })
-        })
-    }
-
+class EmployeeList extends React.Component {
     render () {
         return (
             <div>
                 <h3>Employee List</h3>
 
-                {this.state.employees.map(item => {
+                {this.props.employees.map(item => {
                     return (
                         <div
                             key={item.name}
@@ -38,3 +23,13 @@ export default class App extends React.Component {
         );
     }
 }
+
+const mapStateToProps = (state) => {
+    return {
+        employees : state
+    }
+}
+
+export default connect(
+    mapStateToProps
+)(EmployeeList);
