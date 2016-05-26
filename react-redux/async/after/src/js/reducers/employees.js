@@ -1,9 +1,26 @@
-export default (state = [], action) => {
+const initialState = {
+    data: []
+}
+
+export default (state = initialState, action) => {
     switch (action.type) {
         case 'ADD_EMPLOYEE':
-            return [...state, action.item]
+            return {
+                ...state,
+                data: [...state.data, action.item]
+            }
         case 'REQUEST_GET_EMPLOYEES_SUCCESS':
-            return [...action.data]
+            return {
+                ...state,
+                dataLoading: false,
+                data: [...action.data]
+            }
+        case 'REQUEST_GET_EMPLOYEES_STARTED': {
+            return {
+                ...state,
+                dataLoading: true
+            }
+        }
 
         default:
             return state
