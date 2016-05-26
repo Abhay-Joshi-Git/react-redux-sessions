@@ -1,7 +1,7 @@
 import React from 'react';
-import store from '../store.js';
+import { connect } from 'react-redux';
 
-export default class EmployeeForm extends React.Component {
+class EmployeeForm extends React.Component {
     render() {
         return (
             <div>
@@ -32,13 +32,26 @@ export default class EmployeeForm extends React.Component {
     }
 
     saveRecord() {
-        console.log(store)
-        store.dispatch({
-            type: 'ADD_EMPLOYEE',
-            item: {
-                name: this.name.value,
-                department: this.department.value
-            }
+        this.props.addEmployee({
+            name: this.name.value,
+            department: this.department.value
         })
     }
 }
+
+const addEmployeeActionCreator = (item) => {
+    return {
+        type: 'ADD_EMPLOYEE',
+        item: item
+    }
+}
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        addEmployee: (item) => {
+            dispatch(addEmployeeActionCreator(item))
+        }
+    }
+}
+
+export default connect(null, mapDispatchToProps)(EmployeeForm) 
