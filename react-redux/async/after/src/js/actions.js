@@ -1,43 +1,45 @@
 import * as APIs from './APIs.js';
 
 export const addEmployee = (item) => {
-    return (dispatch) => {
+    return async (dispatch) => {
         dispatch({
             type: 'REQUEST_ADD_EMPLOYEE',
             item: item
         });
 
-        APIs.addEmployee(item).then((response) => {
+        try{
+            let respose = await APIs.addEmployee(item);
             dispatch({
                 type: "ADD_EMPLOYEE",
                 item: item
             });
-        }).catch((error) => {
+        } catch(error) {
             console.log('capturing error . .. ..', error);
             dispatch({
                 type: 'REQUEST_ADD_EMPLOYEE_FAILURE',
                 error: error
             })
-        })
+        }
     }
 }
 
 export const getEmployees = () => {
-    return (dispatch) => {
+    return async (dispatch) => {
         dispatch({
             type: 'REQUEST_GET_EMPLOYEES_STARTED'
         });
 
-        APIs.getEmployees().then((data) => {
+        try {
+            let data = await APIs.getEmployees();
             dispatch({
                 type: 'REQUEST_GET_EMPLOYEES_SUCCESS',
                 data: data
             })
-        }).catch((error) => {
+        } catch(error) {
             dispatch({
                 type: 'REQUEST_GET_EMPLOYEES_FAILURE',
                 error: error
             })
-        })
+        }
     }
 }
