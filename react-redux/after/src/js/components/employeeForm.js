@@ -39,19 +39,19 @@ class EmployeeForm extends React.Component {
     }
 }
 
-const addEmployeeActionCreator = (item) => {
+const addEmployee = (item) => {
     return {
         type: 'ADD_EMPLOYEE',
         item: item
     }
 }
+//
+// const mapDispatchToProps = (dispatch) => {
+//     return {
+//         addEmployee: (item) => {
+//             dispatch(addEmployeeActionCreator(item))
+//         }
+//     }
+// }
 
-const mapDispatchToProps = (dispatch) => {
-    return {
-        addEmployee: (item) => {
-            dispatch(addEmployeeActionCreator(item))
-        }
-    }
-}
-
-export default connect(null, mapDispatchToProps)(EmployeeForm) 
+export default connect(null, {addEmployee})(EmployeeForm) 

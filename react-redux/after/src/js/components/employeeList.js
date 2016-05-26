@@ -29,7 +29,6 @@ class employeeList extends React.Component {
 }
 
 const mapStateToProps = (state) => {
-    console.log(state);
     return {
         employees: state
     }
