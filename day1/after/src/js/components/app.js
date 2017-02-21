@@ -1,4 +1,5 @@
 import React from "react";
+import Class from "./classComponent.js";
 
 export default class App extends React.Component {
     constructor () {
@@ -25,7 +26,7 @@ export default class App extends React.Component {
         );
     }
 
-    onClassClick (id) {
+    onClassClick = (id) => {
         this.setState({
             filter: {
                 classId: id
@@ -38,16 +39,10 @@ export default class App extends React.Component {
         return (
             <div>
                 {this.props.classes.map(item => {
-                        return (
-                            <div
-                                className="well well-sm"
-                                key={item.id}
-                                onClick={() => this.onClassClick(item.id)}
-                            >
-                                <h4>id : {item.id}</h4>
-                                <h4>Name : {item.teacher}</h4>
-                            </div>
-                        )
+                        return <Class
+                            key={item.id} 
+                            item={item}
+                            handleItemClick={this.onClassClick} />
                     })
                 }
             </div>
